@@ -1,17 +1,38 @@
 {
   "name": "bpmn-vue3",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "xlys",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite --mode development --host",
+    "build": "rimraf dist && vite build --mode production",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons": "^0.0.11",
+    "@element-plus/icons-vue": "^0.2.4",
+    "axios": "0.18.1",
+    "bpmn-js": "^8.10.0",
+    "bpmn-js-task-resize": "^1.2.0",
+    "bpmn-js-token-simulation": "^0.10.0",
+    "codemirror-editor-vue3": "^2.0.6",
+    "core-js": "^3.6.5",
+    "diagram-js-minimap": "^2.1.1",
+    "element-plus": "^2.1.0",
+    "min-dash": "^3.5.2",
     "vue": "^3.2.25"
   },
   "devDependencies": {
+    "@vitejs/plugin-legacy": "^1.5.2",
     "@vitejs/plugin-vue": "^2.3.3",
+    "@vitejs/plugin-vue-jsx": "^1.1.8",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.0.0",
+    "sass": "^1.32.12",
     "vite": "^2.9.9"
   }
 }
