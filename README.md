@@ -17,6 +17,6 @@ npm install
 #### 2. 运行
 
 ```shell
-npm run demo
-// or yarn run demo
+npm run dev
+// or yarn run dev
 ```
