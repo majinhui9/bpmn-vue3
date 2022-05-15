@@ -323,25 +323,6 @@
       ]
     },
     {
-      "name": "Assignee",
-      "supperClass": "Element",
-      "meta": {
-        "allowedIn": ["*"]
-      },
-      "properties": [
-        {
-          "name": "label",
-          "type": "String",
-          "isAttr": true
-        },
-        {
-          "name": "viewId",
-          "type": "Number",
-          "isAttr": true
-        }
-      ]
-    },
-    {
       "name": "CallActivity",
       "extends": ["bpmn:CallActivity"],
       "properties": [
@@ -760,8 +741,7 @@
         "allowedIn": [
           "flowable:ServiceTaskLike",
           "flowable:ExecutionListener",
-          "flowable:TaskListener",
-          "bpmn:ServiceTask"
+          "flowable:TaskListener"
         ]
       },
       "properties": [
@@ -782,10 +762,6 @@
         {
           "name": "string",
           "type": "String"
-        },
-        {
-          "name": "htmlVar",
-          "type": "Expression"
         }
       ]
     },
@@ -1055,11 +1031,6 @@
         {
           "name": "children",
           "type": "ChildField",
-          "isMany": true
-        },
-        {
-          "name": "extensionElements",
-          "type": "bpmn:ExtensionElements",
           "isMany": true
         }
       ]

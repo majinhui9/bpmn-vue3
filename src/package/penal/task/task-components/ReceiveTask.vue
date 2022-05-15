@@ -3,7 +3,7 @@
     <el-form-item label="消息实例">
       <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap">
         <el-select v-model="bindMessageId" @change="updateTaskMessage">
-          <el-option v-for="id in Object.keys(messageMap)" :value="id" :label="messageMap[id]" :key="id" />
+          <el-option v-for="id in Object.keys(messageMap)" :key="id" :value="id" :label="messageMap[id]" />
         </el-select>
         <el-button size="default" type="primary" :icon="Plus" style="margin-left: 8px" @click="openMessageModel" />
       </div>
@@ -27,19 +27,18 @@
 <script>
 import { Plus } from '@element-plus/icons-vue'
 export default {
-  name: "ReceiveTask",
   setup() {
-    return {
-      Plus
-    }
+    Plus
   },
+  name: 'ReceiveTask',
   props: {
     id: String,
     type: String
   },
+  inject: ['readonly'],
   data() {
     return {
-      bindMessageId: "",
+      bindMessageId: '',
       newMessageForm: {},
       messageMap: {},
       messageModelVisible: false
@@ -57,17 +56,17 @@ export default {
     this.bpmnMessageRefsMap = Object.create(null);
     this.bpmnRootElements = window.bpmnInstances.modeler.getDefinitions().rootElements;
     this.bpmnRootElements
-      .filter(el => el.$type === "bpmn:Message")
+      .filter(el => el.$type === 'bpmn:Message')
       .forEach(m => {
         this.bpmnMessageRefsMap[m.id] = m;
-        this.$set(this.messageMap, m.id, m.name);
+        this.messageMap[m.id] = m.name;
       });
-    this.$set(this.messageMap, "-1", "无"); // 添加一个空对象，保证可以取消原消息绑定
+    this.messageMap['-1'] = '无' // 添加一个空对象，保证可以取消原消息绑定
   },
   methods: {
     getBindMessage() {
       this.bpmnElement = window.bpmnInstances.bpmnElement;
-      this.bindMessageId = this.bpmnElement.businessObject?.messageRef?.id || "-1";
+      this.bindMessageId = this.bpmnElement.businessObject?.messageRef?.id || '-1';
     },
     openMessageModel() {
       this.messageModelVisible = true;
@@ -75,17 +74,17 @@ export default {
     },
     createNewMessage() {
       if (this.messageMap[this.newMessageForm.id]) {
-        this.$message.error("该消息已存在，请修改id后重新保存");
+        this.$message.error('该消息已存在，请修改id后重新保存');
         return;
       }
-      const newMessage = window.bpmnInstances.moddle.create("bpmn:Message", this.newMessageForm);
+      const newMessage = window.bpmnInstances.moddle.create('bpmn:Message', this.newMessageForm);
       this.bpmnRootElements.push(newMessage);
-      this.$set(this.messageMap, this.newMessageForm.id, this.newMessageForm.name);
+      this.messageMap[this.newMessageForm.id] = this.newMessageForm.name;
       this.bpmnMessageRefsMap[this.newMessageForm.id] = newMessage;
       this.messageModelVisible = false;
     },
     updateTaskMessage(messageId) {
-      if (messageId === "-1") {
+      if (messageId === '-1') {
         window.bpmnInstances.modeling.updateProperties(this.bpmnElement, {
           messageRef: null
         });
@@ -96,7 +95,7 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.bpmnElement = null;
   }
 };

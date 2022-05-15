@@ -435,6 +435,11 @@
           "name": "variableMappingDelegateExpression",
           "isAttr": true,
           "type": "String"
+        },
+        {
+          "name": "businessKey",
+          "isAttr": true,
+          "type": "String"
         }
       ]
     },
@@ -903,6 +908,11 @@
           "type": "Script"
         },
         {
+          "name": "id",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
           "name": "fields",
           "type": "Field",
           "isMany": true
@@ -979,6 +989,69 @@
     {
       "name": "FormProperty",
       "superClass": [ "Element" ],
+      "properties": [
+        {
+          "name": "id",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "label",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "type",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "datePattern",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "defaultValue",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "properties",
+          "type": "Properties"
+        },
+        {
+          "name": "validation",
+          "type": "Validation"
+        },
+        {
+          "name": "values",
+          "type": "Value",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "FormData",
+      "superClass": ["Element"],
+      "meta": {
+        "allowedIn": ["bpmn:StartEvent", "bpmn:UserTask"]
+      },
+      "properties": [
+        {
+          "name": "fields",
+          "type": "FormField",
+          "isMany": true
+        },
+        {
+          "name": "businessKey",
+          "type": "String",
+          "isAttr": true
+        }
+      ]
+    },
+    {
+      "name": "FormField",
+      "superClass": ["Element"],
       "properties": [
         {
           "name": "id",

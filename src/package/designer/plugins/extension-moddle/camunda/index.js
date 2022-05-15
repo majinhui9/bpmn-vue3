@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import CamundaModdleExtension from './extension.js';
 export default {

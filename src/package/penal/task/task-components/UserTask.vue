@@ -34,6 +34,7 @@ export default {
     id: String,
     type: String
   },
+  inject: ['readonly'],
   data() {
     return {
       defaultTaskForm: {

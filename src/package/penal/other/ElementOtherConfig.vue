@@ -4,11 +4,12 @@
       <div class="element-property__label">元素文档：</div>
       <div class="element-property__value">
         <el-input
-          type="textarea"
           v-model="documentation"
+          type="textarea"
           size="default"
           resize="vertical"
           :autosize="{ minRows: 2, maxRows: 4 }"
+          :disabled="readonly"
           @input="updateDocumentation"
           @blur="updateDocumentation"
         />
@@ -19,15 +20,16 @@
 
 <script>
 export default {
-  name: "ElementOtherConfig",
+  name: 'ElementOtherConfig',
   props: {
     id: String
   },
   data() {
     return {
-      documentation: ""
+      documentation: ''
     };
   },
+  inject: ['readonly'],
   watch: {
     id: {
       immediate: true,
@@ -35,10 +37,10 @@ export default {
         if (id && id.length) {
           this.$nextTick(() => {
             const documentations = window.bpmnInstances.bpmnElement.businessObject?.documentation;
-            this.documentation = documentations && documentations.length ? documentations[0].text : "";
+            this.documentation = documentations && documentations.length ? documentations[0].text : '';
           });
         } else {
-          this.documentation = "";
+          this.documentation = '';
         }
       }
     }
@@ -46,13 +48,13 @@ export default {
   methods: {
     updateDocumentation() {
       (this.bpmnElement && this.bpmnElement.id === this.id) || (this.bpmnElement = window.bpmnInstances.elementRegistry.get(this.id));
-      const documentation = window.bpmnInstances.bpmnFactory.create("bpmn:Documentation", { text: this.documentation });
+      const documentation = window.bpmnInstances.bpmnFactory.create('bpmn:Documentation', { text: this.documentation });
       window.bpmnInstances.modeling.updateProperties(this.bpmnElement, {
         documentation: [documentation]
       });
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.bpmnElement = null;
   }
 };

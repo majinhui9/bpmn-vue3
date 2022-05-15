@@ -9,7 +9,7 @@
         <el-option label="外部资源" value="external" />
       </el-select>
     </el-form-item>
-    <el-form-item label="脚本" v-show="scriptTaskForm.scriptType === 'inline'">
+    <el-form-item v-show="scriptTaskForm.scriptType === 'inline'" label="脚本">
       <el-input
         v-model="scriptTaskForm.script"
         type="textarea"
@@ -20,7 +20,7 @@
         @change="updateElementTask()"
       />
     </el-form-item>
-    <el-form-item label="资源地址" v-show="scriptTaskForm.scriptType === 'external'">
+    <el-form-item v-show="scriptTaskForm.scriptType === 'external'" label="资源地址">
       <el-input v-model="scriptTaskForm.resource" clearable @input="updateElementTask()" @change="updateElementTask()" />
     </el-form-item>
     <el-form-item label="结果变量">
@@ -31,18 +31,19 @@
 
 <script>
 export default {
-  name: "ScriptTask",
+  name: 'ScriptTask',
   props: {
     id: String,
     type: String
   },
+  inject: ['readonly'],
   data() {
     return {
       defaultTaskForm: {
-        scriptFormat: "",
-        script: "",
-        resource: "",
-        resultVariable: ""
+        scriptFormat: '',
+        script: '',
+        resource: '',
+        resultVariable: ''
       },
       scriptTaskForm: {}
     };
@@ -58,17 +59,17 @@ export default {
   },
   methods: {
     resetTaskForm() {
-      for (let key in this.defaultTaskForm) {
-        let value = this.bpmnElement?.businessObject[key] || this.defaultTaskForm[key];
-        this.$set(this.scriptTaskForm, key, value);
+      for (const key in this.defaultTaskForm) {
+        const value = this.bpmnElement?.businessObject[key] || this.defaultTaskForm[key];
+        this.scriptTaskForm[key] = value;
       }
-      this.$set(this.scriptTaskForm, "scriptType", this.scriptTaskForm.script ? "inline" : "external");
+      this.scriptTaskForm['scriptType'] = this.scriptTaskForm.script ? 'inline' : 'external';
     },
     updateElementTask() {
-      let taskAttr = Object.create(null);
+      const taskAttr = Object.create(null);
       taskAttr.scriptFormat = this.scriptTaskForm.scriptFormat || null;
       taskAttr.resultVariable = this.scriptTaskForm.resultVariable || null;
-      if (this.scriptTaskForm.scriptType === "inline") {
+      if (this.scriptTaskForm.scriptType === 'inline') {
         taskAttr.script = this.scriptTaskForm.script || null;
         taskAttr.resource = null;
       } else {
@@ -78,7 +79,7 @@ export default {
       window.bpmnInstances.modeling.updateProperties(this.bpmnElement, taskAttr);
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.bpmnElement = null;
   }
 };

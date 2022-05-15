@@ -7,19 +7,19 @@
       <el-table-column label="监听器类型" min-width="80px" show-overflow-tooltip :formatter="row => listenerTypeObject[row.listenerType]" />
       <el-table-column label="操作" width="90px">
         <template v-slot="{ row, $index }">
-          <el-button size="default" type="text" @click="openListenerForm(row, $index)">编辑</el-button>
+          <el-button size="default" text :disabled="readonly" @click="openListenerForm(row, $index)">编辑</el-button>
           <el-divider direction="vertical" />
-          <el-button size="default" type="text" style="color: #ff4d4f" @click="removeListener(row, $index)">移除</el-button>
+          <el-button size="default" text :disabled="readonly" style="color: #ff4d4f" @click="removeListener(row, $index)">移除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="element-drawer__button">
-      <el-button size="default" type="primary" :icon="Plus" @click="openListenerForm(null)">添加监听器</el-button>
+      <el-button size="default" type="primary" :icon="Plus" :disabled="readonly" @click="openListenerForm(null)">添加监听器</el-button>
     </div>
 
     <!-- 监听器 编辑/创建 部分 -->
     <el-drawer v-model="listenerFormModelVisible" title="任务监听器" :size="`${width}px`" append-to-body destroy-on-close>
-      <el-form size="default" :model="listenerForm" label-width="96px" ref="listenerFormRef" @submit.prevent>
+      <el-form ref="listenerFormRef" size="default" :model="listenerForm" label-width="96px" @submit.prevent>
         <el-form-item label="事件类型" prop="event" :rules="{ required: true, trigger: ['blur', 'change'] }">
           <el-select v-model="listenerForm.event">
             <el-option v-for="i in Object.keys(listenerEventTypeObject)" :key="i" :label="listenerEventTypeObject[i]" :value="i" />
@@ -35,44 +35,44 @@
         </el-form-item>
         <el-form-item
           v-if="listenerForm.listenerType === 'classListener'"
+          key="listener-class"
           label="Java类"
           prop="class"
-          key="listener-class"
           :rules="{ required: true, trigger: ['blur', 'change'] }"
         >
           <el-input v-model="listenerForm.class" clearable />
         </el-form-item>
         <el-form-item
           v-if="listenerForm.listenerType === 'expressionListener'"
+          key="listener-expression"
           label="表达式"
           prop="expression"
-          key="listener-expression"
           :rules="{ required: true, trigger: ['blur', 'change'] }"
         >
           <el-input v-model="listenerForm.expression" clearable />
         </el-form-item>
         <el-form-item
           v-if="listenerForm.listenerType === 'delegateExpressionListener'"
+          key="listener-delegate"
           label="代理表达式"
           prop="delegateExpression"
-          key="listener-delegate"
           :rules="{ required: true, trigger: ['blur', 'change'] }"
         >
           <el-input v-model="listenerForm.delegateExpression" clearable />
         </el-form-item>
         <template v-if="listenerForm.listenerType === 'scriptListener'">
           <el-form-item
+            key="listener-script-format"
             label="脚本格式"
             prop="scriptFormat"
-            key="listener-script-format"
             :rules="{ required: true, trigger: ['blur', 'change'], message: '请填写脚本格式' }"
           >
             <el-input v-model="listenerForm.scriptFormat" clearable />
           </el-form-item>
           <el-form-item
+            key="listener-script-type"
             label="脚本类型"
             prop="scriptType"
-            key="listener-script-type"
             :rules="{ required: true, trigger: ['blur', 'change'], message: '请选择脚本类型' }"
           >
             <el-select v-model="listenerForm.scriptType">
@@ -82,18 +82,18 @@
           </el-form-item>
           <el-form-item
             v-if="listenerForm.scriptType === 'inlineScript'"
+            key="listener-script"
             label="脚本内容"
             prop="value"
-            key="listener-script"
             :rules="{ required: true, trigger: ['blur', 'change'], message: '请填写脚本内容' }"
           >
             <el-input v-model="listenerForm.value" clearable />
           </el-form-item>
           <el-form-item
             v-if="listenerForm.scriptType === 'externalScript'"
+            key="listener-resource"
             label="资源地址"
             prop="resource"
-            key="listener-resource"
             :rules="{ required: true, trigger: ['blur', 'change'], message: '请填写资源地址' }"
           >
             <el-input v-model="listenerForm.resource" clearable />
@@ -101,7 +101,7 @@
         </template>
 
         <template v-if="listenerForm.event === 'timeout'">
-          <el-form-item label="定时器类型" prop="eventDefinitionType" key="eventDefinitionType">
+          <el-form-item key="eventDefinitionType" label="定时器类型" prop="eventDefinitionType">
             <el-select v-model="listenerForm.eventDefinitionType">
               <el-option label="日期" value="date" />
               <el-option label="持续时长" value="duration" />
@@ -111,9 +111,9 @@
           </el-form-item>
           <el-form-item
             v-if="!!listenerForm.eventDefinitionType && listenerForm.eventDefinitionType !== 'null'"
+            key="eventTimeDefinitions"
             label="定时器"
             prop="eventTimeDefinitions"
-            key="eventTimeDefinitions"
             :rules="{ required: true, trigger: ['blur', 'change'], message: '请填写定时器配置' }"
           >
             <el-input v-model="listenerForm.eventTimeDefinitions" clearable />
@@ -123,7 +123,7 @@
 
       <el-divider />
       <p class="listener-filed__title">
-        <span><i class="el-icon-menu"></i>注入字段：</span>
+        <span><el-icon><menu /></el-icon>注入字段：</span>
         <el-button size="default" type="primary" @click="openListenerFieldForm(null)">添加字段</el-button>
       </p>
       <el-table :data="fieldsListOfListener" size="default" max-height="240" border fit style="flex: none">
@@ -133,9 +133,9 @@
         <el-table-column label="字段值/表达式" min-width="100px" show-overflow-tooltip :formatter="row => row.string || row.expression" />
         <el-table-column label="操作" width="100px">
           <template v-slot="{ row, $index }">
-            <el-button size="default" type="text" @click="openListenerFieldForm(row, $index)">编辑</el-button>
+            <el-button size="default" text @click="openListenerFieldForm(row, $index)">编辑</el-button>
             <el-divider direction="vertical" />
-            <el-button size="default" type="text" style="color: #ff4d4f" @click="removeListenerField(row, $index)">移除</el-button>
+            <el-button size="default" text style="color: #ff4d4f" @click="removeListenerField(row, $index)">移除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -148,7 +148,7 @@
 
     <!-- 注入西段 编辑/创建 部分 -->
     <el-dialog title="字段配置" v-model="listenerFieldFormModelVisible" width="600px" append-to-body destroy-on-close>
-      <el-form :model="listenerFieldForm" size="default" label-width="96px" ref="listenerFieldFormRef" style="height: 136px" @submit.prevent>
+      <el-form ref="listenerFieldFormRef" :model="listenerFieldForm" size="default" label-width="96px" style="height: 136px" @submit.prevent>
         <el-form-item label="字段名称：" prop="name" :rules="{ required: true, trigger: ['blur', 'change'] }">
           <el-input v-model="listenerFieldForm.name" clearable />
         </el-form-item>
@@ -159,18 +159,18 @@
         </el-form-item>
         <el-form-item
           v-if="listenerFieldForm.fieldType === 'string'"
+          key="field-string"
           label="字段值："
           prop="string"
-          key="field-string"
           :rules="{ required: true, trigger: ['blur', 'change'] }"
         >
           <el-input v-model="listenerFieldForm.string" clearable />
         </el-form-item>
         <el-form-item
           v-if="listenerFieldForm.fieldType === 'expression'"
+          key="field-expression"
           label="表达式："
           prop="expression"
-          key="field-expression"
           :rules="{ required: true, trigger: ['blur', 'change'] }"
         >
           <el-input v-model="listenerFieldForm.expression" clearable />
@@ -184,18 +184,24 @@
   </div>
 </template>
 <script>
-import { createListenerObject, updateElementExtensions } from "../../utils";
-import { initListenerForm, initListenerType, eventType, listenerType, fieldType } from "./utilSelf";
-
+import { createListenerObject, updateElementExtensions } from '../../utils';
+import { initListenerForm, initListenerType, eventType, listenerType, fieldType } from './utilSelf';
+import { Plus } from '@element-plus/icons-vue'
 export default {
-  name: "UserTaskListeners",
+  setup() {
+    return {
+      Plus
+    }
+  },
+  name: 'UserTaskListeners',
   props: {
     id: String,
     type: String
   },
   inject: {
-    prefix: "prefix",
-    width: "width"
+    prefix: 'prefix',
+    width: 'width',
+    readonly: 'readonly'
   },
   data() {
     return {
@@ -224,7 +230,8 @@ export default {
     resetListenersList() {
       this.bpmnElement = window.bpmnInstances.bpmnElement;
       this.otherExtensionList = [];
-      this.bpmnElementListeners = this.bpmnElement.businessObject?.extensionElements?.values?.filter(ex => ex.$type === `${this.prefix}:TaskListener`) ?? [];
+      const val = this.prefix + ':TaskListener'
+      this.bpmnElementListeners = this.bpmnElement.businessObject?.extensionElements?.values?.filter(ex => ex.$type === val) ?? [];
       this.elementListenersList = this.bpmnElementListeners.map(listener => initListenerType(listener));
     },
     openListenerForm(listener, index) {
@@ -236,36 +243,33 @@ export default {
         this.editingListenerIndex = -1; // 标记为新增
       }
       if (listener && listener.fields) {
-        this.fieldsListOfListener = listener.fields.map(field => ({
-          ...field,
-          fieldType: field.string ? "string" : "expression"
-        }));
+        this.fieldsListOfListener = listener.fields.map(field => ({ ...field, fieldType: field.string ? 'string' : 'expression' }));
       } else {
         this.fieldsListOfListener = [];
-        this.$set(this.listenerForm, "fields", []);
+        this.listenerForm['fields'] = []
       }
       // 打开侧边栏并清楚验证状态
       this.listenerFormModelVisible = true;
       this.$nextTick(() => {
-        if (this.$refs["listenerFormRef"]) this.$refs["listenerFormRef"].clearValidate();
+        if (this.$refs['listenerFormRef']) this.$refs['listenerFormRef'].clearValidate();
       });
     },
     // 移除监听器
     removeListener(listener, index) {
-      this.$confirm("确认移除该监听器吗？", "提示", {
-        confirmButtonText: "确 认",
-        cancelButtonText: "取 消"
+      this.$confirm('确认移除该监听器吗？', '提示', {
+        confirmButtonText: '确 认',
+        cancelButtonText: '取 消'
       })
         .then(() => {
           this.bpmnElementListeners.splice(index, 1);
           this.elementListenersList.splice(index, 1);
           updateElementExtensions(this.bpmnElement, this.otherExtensionList.concat(this.bpmnElementListeners));
         })
-        .catch(() => console.info("操作取消"));
+        .catch(() => console.info('操作取消'));
     },
     // 保存监听器
     async saveListenerConfig() {
-      let validateStatus = await this.$refs["listenerFormRef"].validate();
+      const validateStatus = await this.$refs['listenerFormRef'].validate();
       if (!validateStatus) return; // 验证不通过直接返回
       const listenerObject = createListenerObject(this.listenerForm, true, this.prefix);
       if (this.editingListenerIndex === -1) {
@@ -276,7 +280,8 @@ export default {
         this.elementListenersList.splice(this.editingListenerIndex, 1, this.listenerForm);
       }
       // 保存其他配置
-      this.otherExtensionList = this.bpmnElement.businessObject?.extensionElements?.values?.filter(ex => ex.$type !== `${this.prefix}:TaskListener`) ?? [];
+      const val = this.prefix + ':TaskListener'
+      this.otherExtensionList = this.bpmnElement.businessObject?.extensionElements?.values?.filter(ex => ex.$type !== val) ?? [];
       updateElementExtensions(this.bpmnElement, this.otherExtensionList.concat(this.bpmnElementListeners));
       // 4. 隐藏侧边栏
       this.listenerFormModelVisible = false;
@@ -288,12 +293,12 @@ export default {
       this.editingListenerFieldIndex = field ? index : -1;
       this.listenerFieldFormModelVisible = true;
       this.$nextTick(() => {
-        if (this.$refs["listenerFieldFormRef"]) this.$refs["listenerFieldFormRef"].clearValidate();
+        if (this.$refs['listenerFieldFormRef']) this.$refs['listenerFieldFormRef'].clearValidate();
       });
     },
     // 保存监听器注入字段
     async saveListenerFiled() {
-      let validateStatus = await this.$refs["listenerFieldFormRef"].validate();
+      const validateStatus = await this.$refs['listenerFieldFormRef'].validate();
       if (!validateStatus) return; // 验证不通过直接返回
       if (this.editingListenerFieldIndex === -1) {
         this.fieldsListOfListener.push(this.listenerFieldForm);
@@ -307,15 +312,15 @@ export default {
     },
     // 移除监听器字段
     removeListenerField(field, index) {
-      this.$confirm("确认移除该字段吗？", "提示", {
-        confirmButtonText: "确 认",
-        cancelButtonText: "取 消"
+      this.$confirm('确认移除该字段吗？', '提示', {
+        confirmButtonText: '确 认',
+        cancelButtonText: '取 消'
       })
         .then(() => {
           this.fieldsListOfListener.splice(index, 1);
           this.listenerForm.fields.splice(index, 1);
         })
-        .catch(() => console.info("操作取消"));
+        .catch(() => console.info('操作取消'));
     }
   }
 };

@@ -7,17 +7,17 @@ export function initListenerForm(listener) {
     self = {
       ...listener,
       ...listener.script,
-      scriptType: listener.script.resource ? "externalScript" : "inlineScript"
+      scriptType: listener.script.resource ? 'externalScript' : 'inlineScript'
     };
   }
-  if (listener.event === "timeout" && listener.eventDefinitions) {
+  if (listener.event === 'timeout' && listener.eventDefinitions) {
     if (listener.eventDefinitions.length) {
-      let k = "";
-      for (let key in listener.eventDefinitions[0]) {
+      let k = '';
+      for (const key in listener.eventDefinitions[0]) {
         console.log(listener.eventDefinitions, key);
-        if (key.indexOf("time") !== -1) {
+        if (key.indexOf('time') !== -1) {
           k = key;
-          self.eventDefinitionType = key.replace("time", "").toLowerCase();
+          self.eventDefinitionType = key.replace('time', '').toLowerCase();
         }
       }
       console.log(k);
@@ -29,10 +29,10 @@ export function initListenerForm(listener) {
 
 export function initListenerType(listener) {
   let listenerType;
-  if (listener.class) listenerType = "classListener";
-  if (listener.expression) listenerType = "expressionListener";
-  if (listener.delegateExpression) listenerType = "delegateExpressionListener";
-  if (listener.script) listenerType = "scriptListener";
+  if (listener.class) listenerType = 'classListener';
+  if (listener.expression) listenerType = 'expressionListener';
+  if (listener.delegateExpression) listenerType = 'delegateExpressionListener';
+  if (listener.script) listenerType = 'scriptListener';
   return {
     ...JSON.parse(JSON.stringify(listener)),
     ...(listener.script ?? {}),
@@ -41,22 +41,22 @@ export function initListenerType(listener) {
 }
 
 export const listenerType = {
-  classListener: "Java 类",
-  expressionListener: "表达式",
-  delegateExpressionListener: "代理表达式",
-  scriptListener: "脚本"
+  classListener: 'Java 类',
+  expressionListener: '表达式',
+  delegateExpressionListener: '代理表达式',
+  scriptListener: '脚本'
 };
 
 export const eventType = {
-  create: "创建",
-  assignment: "指派",
-  complete: "完成",
-  delete: "删除",
-  update: "更新",
-  timeout: "超时"
+  create: '创建',
+  assignment: '指派',
+  complete: '完成',
+  delete: '删除',
+  update: '更新',
+  timeout: '超时'
 };
 
 export const fieldType = {
-  string: "字符串",
-  expression: "表达式"
+  string: '字符串',
+  expression: '表达式'
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="panel-tab__content">
-    <el-form size="default" label-width="90px" @submit.prevent>
+    <el-form size="default" label-width="90px" :disabled="readonly" @submit.prevent>
       <el-form-item label="ID">
         <el-input v-model="elementBaseInfo.id" :disabled="idEditDisabled" clearable @change="updateBaseInfo('id')" />
       </el-form-item>
@@ -16,15 +16,21 @@
           <el-switch v-model="elementBaseInfo.isExecutable" active-text="是" inactive-text="否" @change="updateBaseInfo('isExecutable')" />
         </el-form-item>
       </template>
-      <el-form-item v-if="elementBaseInfo.$type === 'bpmn:SubProcess'" label="状态">
-        <el-switch v-model="elementBaseInfo.isExpanded" active-text="展开" inactive-text="折叠" @change="updateBaseInfo('isExpanded')" />
+      <!-- 调用活动 -->
+      <el-form-item v-if="elementBaseInfo.$type === 'bpmn:CallActivity'" label="调用流程">
+        <el-select v-model="elementBaseInfo.calledElement" placeholder="请选择" clearable @change="updateBaseInfo('calledElement')">
+          <el-option v-for="item in callList" :key="item.key" :label="item.name" :value="item.key"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="elementBaseInfo.$type === 'bpmn:CallActivity'" label="业务KEY">
+        <el-input v-model="elementBaseInfo.businessKey" clearable @change="updateBaseInfo('businessKey')" />
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
 export default {
-  name: "ElementBaseInfo",
+  name: 'ElementBaseInfo',
   props: {
     businessObject: Object,
     type: String,
@@ -33,9 +39,11 @@ export default {
       default: true
     }
   },
+  inject: ['readonly'],
   data() {
     return {
-      elementBaseInfo: {}
+      elementBaseInfo: {},
+      callList: []
     };
   },
   watch: {
@@ -50,30 +58,23 @@ export default {
   },
   methods: {
     resetBaseInfo() {
-      this.bpmnElement = window?.bpmnInstances?.bpmnElement || {};
+      this.bpmnElement = window?.bpmnInstances?.bpmnElement;
       this.elementBaseInfo = JSON.parse(JSON.stringify(this.bpmnElement.businessObject));
-      if (this.elementBaseInfo && this.elementBaseInfo.$type === "bpmn:SubProcess") {
-        this.$set(this.elementBaseInfo, "isExpanded", this.elementBaseInfo.di?.isExpanded);
-      }
     },
     updateBaseInfo(key) {
-      if (key === "id") {
+      const attrObj = Object.create(null);
+      attrObj[key] = this.elementBaseInfo[key];
+      if (key === 'id') {
         window.bpmnInstances.modeling.updateProperties(this.bpmnElement, {
           id: this.elementBaseInfo[key],
           di: { id: `${this.elementBaseInfo[key]}_di` }
         });
-        return;
+      } else {
+        window.bpmnInstances.modeling.updateProperties(this.bpmnElement, attrObj);
       }
-      if (key === "isExpanded") {
-        window?.bpmnInstances?.modeling.toggleCollapse(this.bpmnElement);
-        return;
-      }
-      const attrObj = Object.create(null);
-      attrObj[key] = this.elementBaseInfo[key];
-      window.bpmnInstances.modeling.updateProperties(this.bpmnElement, attrObj);
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.bpmnElement = null;
   }
 };

@@ -1,5 +1,5 @@
-import BpmnRules from "bpmn-js/lib/features/rules/BpmnRules";
-import inherits from "inherits";
+import BpmnRules from 'bpmn-js/lib/features/rules/BpmnRules';
+import inherits from 'inherits';
 
 export default function CustomRules(eventBus) {
   BpmnRules.call(this, eventBus);
