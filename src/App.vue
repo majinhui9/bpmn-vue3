@@ -91,7 +91,7 @@ import CustomContentPadProvider from "./package/designer/plugins/content-pad";
 import CustomPaletteProvider from "./package/designer/plugins/palette";
 import Log from "./package/Log";
 // 任务resize
-import resizeTask from "bpmn-js-task-resize/lib";
+// import resizeTask from "bpmn-js-task-resize/lib";
 // 小地图
 import minimapModule from "diagram-js-minimap";
 
