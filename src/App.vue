@@ -59,7 +59,7 @@
     </el-drawer>
 
     <!-- <div class="demo-info-bar">
-      <div class="open-model-button" @click="infoTipVisible = !infoTipVisible"><i class="el-icon-info"></i></div>
+      <div class="open-model-button" @click="infoTipVisible = !infoTipVisible"><el-icon><InfoFilled /></el-icon></div>
       <transition name="zoom-in-right">
         <div class="info-tip" v-show="infoTipVisible">
           <p><strong>该项目仅作为Bpmn.js的简单演示项目，不涉及过多的自定义Render内容。</strong></p>

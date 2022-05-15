@@ -99,7 +99,7 @@
       </el-form>
       <el-divider />
       <p class="listener-filed__title">
-        <span><i class="el-icon-menu"></i>注入字段：</span>
+        <span><el-icon><Menu /></el-icon>注入字段：</span>
         <el-button size="default" type="primary" @click="openListenerFieldForm(null)">添加字段</el-button>
       </p>
       <el-table :data="fieldsListOfListener" size="default" max-height="240" border fit style="flex: none">

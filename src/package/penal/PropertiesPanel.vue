@@ -22,7 +22,7 @@
       <el-collapse-item name="condition" v-if="formVisible" key="form">
         <template #title>
 
-          <div class="panel-tab__title"><i class="el-icon-s-order"></i>表单</div>
+          <div class="panel-tab__title"><el-icon><list /></el-icon>表单</div>
         </template>
         <element-form :id="elementId" :type="elementType" />
       </el-collapse-item>
