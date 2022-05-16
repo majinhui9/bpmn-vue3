@@ -108,7 +108,7 @@ export default {
         businessObject.loopCharacteristics.extensionElements.values &&
         businessObject.loopCharacteristics.extensionElements.values.length
       ) {
-        this.$set(this.loopInstanceForm, "timeCycle", businessObject.loopCharacteristics.extensionElements.values[0].body);
+        this.loopInstanceForm["timeCycle"] = businessObject.loopCharacteristics.extensionElements.values[0].body
       }
     },
     changeLoopCharacteristicsType(type) {
@@ -184,7 +184,7 @@ export default {
       const { asyncBefore, asyncAfter } = this.loopInstanceForm;
       let asyncAttr = Object.create(null);
       if (!asyncBefore && !asyncAfter) {
-        this.$set(this.loopInstanceForm, "exclusive", false);
+        this.loopInstanceForm["exclusive"] = false
         asyncAttr = { asyncBefore: false, asyncAfter: false, exclusive: false, extensionElements: null };
       } else {
         asyncAttr[key] = this.loopInstanceForm[key];

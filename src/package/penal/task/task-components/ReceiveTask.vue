@@ -60,9 +60,9 @@ export default {
       .filter(el => el.$type === "bpmn:Message")
       .forEach(m => {
         this.bpmnMessageRefsMap[m.id] = m;
-        this.$set(this.messageMap, m.id, m.name);
+        this.messageMap[m.id] = m.name
       });
-    this.$set(this.messageMap, "-1", "无"); // 添加一个空对象，保证可以取消原消息绑定
+    this.messageMap["-1"] = "无" // 添加一个空对象，保证可以取消原消息绑定
   },
   methods: {
     getBindMessage() {
@@ -80,7 +80,7 @@ export default {
       }
       const newMessage = window.bpmnInstances.moddle.create("bpmn:Message", this.newMessageForm);
       this.bpmnRootElements.push(newMessage);
-      this.$set(this.messageMap, this.newMessageForm.id, this.newMessageForm.name);
+      this.messageMap[this.newMessageForm.id] = this.newMessageForm.name
       this.bpmnMessageRefsMap[this.newMessageForm.id] = newMessage;
       this.messageModelVisible = false;
     },

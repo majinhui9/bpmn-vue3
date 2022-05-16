@@ -223,7 +223,7 @@ export default {
         }));
       } else {
         this.fieldsListOfListener = [];
-        this.$set(this.listenerForm, "fields", []);
+        this.listenerForm["fields"] = []
       }
       // 打开侧边栏并清楚验证状态
       this.listenerFormModelVisible = true;

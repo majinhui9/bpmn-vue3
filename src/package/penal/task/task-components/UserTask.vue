@@ -66,7 +66,7 @@ export default {
         } else {
           value = this.bpmnElement?.businessObject[key] || this.defaultTaskForm[key];
         }
-        this.$set(this.userTaskForm, key, value);
+        this.userTaskForm[key] = value
       }
     },
     updateElementTask(key) {

@@ -278,6 +278,11 @@ export default {
     //   this.bpmnModeler = null;
     // });
   },
+  beforeUnmount() {
+    if (this.bpmnModeler) this.bpmnModeler.destroy();
+    this.$emit("destroy", this.bpmnModeler);
+    this.bpmnModeler = null;
+  },
   methods: {
     initBpmnModeler() {
       if (this.bpmnModeler) return;

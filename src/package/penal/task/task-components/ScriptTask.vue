@@ -60,9 +60,9 @@ export default {
     resetTaskForm() {
       for (let key in this.defaultTaskForm) {
         let value = this.bpmnElement?.businessObject[key] || this.defaultTaskForm[key];
-        this.$set(this.scriptTaskForm, key, value);
+        this.scriptTaskForm[key] = value
       }
-      this.$set(this.scriptTaskForm, "scriptType", this.scriptTaskForm.script ? "inline" : "external");
+      this.scriptTaskForm["scriptType"] = this.scriptTaskForm.script ? "inline" : "external"
     },
     updateElementTask() {
       let taskAttr = Object.create(null);

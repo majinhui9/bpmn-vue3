@@ -75,16 +75,16 @@ export default {
         this.flowConditionForm = { ...conditionExpression, type: "condition" };
         // resource 可直接标识 是否是外部资源脚本
         if (this.flowConditionForm.resource) {
-          this.$set(this.flowConditionForm, "conditionType", "script");
-          this.$set(this.flowConditionForm, "scriptType", "externalScript");
+          this.flowConditionForm["conditionType"] =  "script"
+          this.flowConditionForm["scriptType"] = "externalScript"
           return;
         }
         if (conditionExpression.language) {
-          this.$set(this.flowConditionForm, "conditionType", "script");
-          this.$set(this.flowConditionForm, "scriptType", "inlineScript");
+          this.flowConditionForm["conditionType"] = "script"
+          this.flowConditionForm["scriptType"] = "inlineScript"
           return;
         }
-        this.$set(this.flowConditionForm, "conditionType", "expression");
+        this.flowConditionForm["conditionType"] = "expression"
       }
     },
     updateFlowType(flowType) {
@@ -124,9 +124,9 @@ export default {
       } else {
         if (scriptType === "inlineScript") {
           condition = window.bpmnInstances.moddle.create("bpmn:FormalExpression", { body, language });
-          this.$set(this.flowConditionForm, "resource", "");
+          this.flowConditionForm["resource"] = ""
         } else {
-          this.$set(this.flowConditionForm, "body", "");
+          this.flowConditionForm["body"] = ""
           condition = window.bpmnInstances.moddle.create("bpmn:FormalExpression", { resource, language });
         }
       }

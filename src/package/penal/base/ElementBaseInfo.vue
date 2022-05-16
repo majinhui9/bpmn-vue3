@@ -53,7 +53,7 @@ export default {
       this.bpmnElement = window?.bpmnInstances?.bpmnElement || {};
       this.elementBaseInfo = JSON.parse(JSON.stringify(this.bpmnElement.businessObject));
       if (this.elementBaseInfo && this.elementBaseInfo.$type === "bpmn:SubProcess") {
-        this.$set(this.elementBaseInfo, "isExpanded", this.elementBaseInfo.di?.isExpanded);
+        this.elementBaseInfo["isExpanded"] = this.elementBaseInfo.di?.isExpanded
       }
     },
     updateBaseInfo(key) {
