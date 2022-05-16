@@ -192,7 +192,7 @@ export default {
       window.bpmnInstances.modeling.updateModdleProperties(this.bpmnElement, this.multiLoopInstance, asyncAttr);
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.multiLoopInstance = null;
     this.bpmnElement = null;
   }

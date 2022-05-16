@@ -133,7 +133,7 @@ export default {
       window.bpmnInstances.modeling.updateProperties(this.bpmnElement, { conditionExpression: condition });
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.bpmnElement = null;
     this.bpmnElementSource = null;
     this.bpmnElementSourceRef = null;

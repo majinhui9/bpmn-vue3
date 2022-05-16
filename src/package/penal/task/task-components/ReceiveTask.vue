@@ -96,7 +96,7 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.bpmnElement = null;
   }
 };

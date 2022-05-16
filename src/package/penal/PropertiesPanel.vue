@@ -205,7 +205,7 @@ export default {
       );
       this.formVisible = this.elementType === "UserTask" || this.elementType === "StartEvent";
     },
-    beforeDestroy() {
+    beforeUnmount() {
       window.bpmnInstances = null;
     }
   }

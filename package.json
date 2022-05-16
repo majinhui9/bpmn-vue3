@@ -19,6 +19,7 @@
     "core-js": "^3.6.5",
     "diagram-js-minimap": "^2.1.1",
     "element-plus": "^2.1.0",
+    "lint": "^0.7.0",
     "min-dash": "^3.5.2",
     "vue": "^3.2.25"
   },
@@ -27,7 +28,7 @@
     "@vitejs/plugin-vue": "^2.3.3",
     "@vitejs/plugin-vue-jsx": "^1.1.8",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",

@@ -73,7 +73,7 @@ export default {
       window.bpmnInstances.modeling.updateProperties(this.bpmnElement, attrObj);
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.bpmnElement = null;
   }
 };
