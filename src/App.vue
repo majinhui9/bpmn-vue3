@@ -49,7 +49,7 @@
         </el-form-item>
         <el-form-item label="工具栏">
           <el-radio-group v-model="controlForm.headerButtonSize">
-            <el-radio label="small">mini</el-radio>
+            <el-radio label="small">small</el-radio>
             <el-radio label="default">default</el-radio>
             <el-radio label="large">large</el-radio>
           </el-radio-group>
@@ -95,10 +95,6 @@ import Log from "./package/Log";
 // 小地图
 import minimapModule from "diagram-js-minimap";
 
-// import MyProcessDesigner from './package/designer';
-// import MyPropertiesPenal from './package/penal';
-// import './package/theme/index.scss';
-
 
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
@@ -106,7 +102,6 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css';
 
 export default {
   name: "App",
-  // components: { MyProcessDesigner, MyPropertiesPenal },
   data() {
     return {
       xmlString: "",
