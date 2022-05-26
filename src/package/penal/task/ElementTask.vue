@@ -1,6 +1,6 @@
 <template>
   <div class="panel-tab__content">
-    <el-form size="default" label-width="90px" @submit.prevent>
+    <el-form size="small" label-width="90px" @submit.prevent>
       <el-form-item label="异步延续">
         <el-checkbox v-model="taskConfigForm.asyncBefore" label="异步前" @change="changeTaskAsync" />
         <el-checkbox v-model="taskConfigForm.asyncAfter" label="异步后" @change="changeTaskAsync" />

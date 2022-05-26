@@ -1,23 +1,23 @@
 <template>
   <div class="panel-tab__content">
-    <el-table :data="elementPropertyList" size="default" max-height="240" border fit>
+    <el-table :data="elementPropertyList" size="small" max-height="240" border fit>
       <el-table-column label="序号" width="50px" type="index" />
       <el-table-column label="属性名" prop="name" min-width="100px" show-overflow-tooltip />
       <el-table-column label="属性值" prop="value" min-width="100px" show-overflow-tooltip />
       <el-table-column label="操作" width="90px">
         <template v-slot="{ row, $index }">
-          <el-button size="default" type="text" @click="openAttributesForm(row, $index)">编辑</el-button>
+          <el-button link type="" @click="openAttributesForm(row, $index)">编辑</el-button>
           <el-divider direction="vertical" />
-          <el-button size="default" type="text" style="color: #ff4d4f" @click="removeAttributes(row, $index)">移除</el-button>
+          <el-button link type="" style="color: #ff4d4f" @click="removeAttributes(row, $index)">移除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="element-drawer__button">
-      <el-button size="default" type="primary" :icon="Plus" @click="openAttributesForm(null, -1)">添加属性</el-button>
+      <el-button size="small" type="primary" :icon="Plus" @click="openAttributesForm(null, -1)">添加属性</el-button>
     </div>
 
     <el-dialog v-model="propertyFormModelVisible" title="属性配置" width="600px" append-to-body destroy-on-close>
-      <el-form :model="propertyForm" label-width="80px" size="default" ref="attributeFormRef" @submit.prevent>
+      <el-form :model="propertyForm" label-width="80px" size="small" ref="attributeFormRef" @submit.prevent>
         <el-form-item label="属性名：" prop="name">
           <el-input v-model="propertyForm.name" clearable />
         </el-form-item>
@@ -26,8 +26,8 @@
         </el-form-item>
       </el-form>
       <template v-slot:footer>
-        <el-button size="default" @click="propertyFormModelVisible = false">取 消</el-button>
-        <el-button size="default" type="primary" @click="saveAttribute">确 定</el-button>
+        <el-button size="small" @click="propertyFormModelVisible = false">取 消</el-button>
+        <el-button size="small" type="primary" @click="saveAttribute">确 定</el-button>
       </template>
     </el-dialog>
   </div>

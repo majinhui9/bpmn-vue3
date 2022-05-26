@@ -1,6 +1,6 @@
-import MyProcessDesigner from "./designer";
-import MyProcessPalette from "./palette";
-import MyProcessPenal from "./penal";
+import MyProcessDesigner from './designer';
+import MyProcessPalette from './palette';
+import MyProcessPenal from './penal';
 
 const components = [MyProcessDesigner, MyProcessPenal, MyProcessPalette];
 
@@ -10,12 +10,12 @@ const install = function(Vue) {
   });
 };
 
-if (typeof window !== "undefined" && window.Vue) {
+if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue);
 }
 
 export default {
-  version: "0.0.1",
+  version: '0.0.1',
   install,
   ...components
 };

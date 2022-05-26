@@ -1,6 +1,6 @@
-import CustomAutoPlace from "./CustomAutoPlace";
+import CustomAutoPlace from './CustomAutoPlace';
 
 export default {
-  __init__: ["autoPlace"],
-  autoPlace: ["type", CustomAutoPlace]
+  __init__: ['autoPlace'],
+  autoPlace: ['type', CustomAutoPlace]
 };

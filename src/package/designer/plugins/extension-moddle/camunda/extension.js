@@ -1,21 +1,21 @@
-"use strict";
+'use strict';
 
 import { some, isObject, isFunction } from '@/utils/min-dash.js';
 
-var WILDCARD = "*";
+var WILDCARD = '*';
 
 export default function CamundaModdleExtension(eventBus) {
   var self = this;
 
-  eventBus.on("moddleCopy.canCopyProperty", function(context) {
-    var property = context.property,
-      parent = context.parent;
+  eventBus.on('moddleCopy.canCopyProperty', function(context) {
+    var property = context.property;
+    var parent = context.parent;
 
     return self.canCopyProperty(property, parent);
   });
 }
 
-CamundaModdleExtension.$inject = ["eventBus"];
+CamundaModdleExtension.$inject = ['eventBus'];
 
 /**
  * Check wether to disallow copying property.
@@ -28,39 +28,39 @@ CamundaModdleExtension.prototype.canCopyProperty = function(property, parent) {
 
   // (2) check more complex scenarios
 
-  if (is(property, "camunda:InputOutput") && !this.canHostInputOutput(parent)) {
+  if (is(property, 'camunda:InputOutput') && !this.canHostInputOutput(parent)) {
     return false;
   }
 
-  if (isAny(property, ["camunda:Connector", "camunda:Field"]) && !this.canHostConnector(parent)) {
+  if (isAny(property, ['camunda:Connector', 'camunda:Field']) && !this.canHostConnector(parent)) {
     return false;
   }
 
-  if (is(property, "camunda:In") && !this.canHostIn(parent)) {
+  if (is(property, 'camunda:In') && !this.canHostIn(parent)) {
     return false;
   }
 };
 
 CamundaModdleExtension.prototype.canHostInputOutput = function(parent) {
   // allowed in camunda:Connector
-  var connector = getParent(parent, "camunda:Connector");
+  var connector = getParent(parent, 'camunda:Connector');
 
   if (connector) {
     return true;
   }
 
   // special rules inside bpmn:FlowNode
-  var flowNode = getParent(parent, "bpmn:FlowNode");
+  var flowNode = getParent(parent, 'bpmn:FlowNode');
 
   if (!flowNode) {
     return false;
   }
 
-  if (isAny(flowNode, ["bpmn:StartEvent", "bpmn:Gateway", "bpmn:BoundaryEvent"])) {
+  if (isAny(flowNode, ['bpmn:StartEvent', 'bpmn:Gateway', 'bpmn:BoundaryEvent'])) {
     return false;
   }
 
-  if (is(flowNode, "bpmn:SubProcess") && flowNode.get("triggeredByEvent")) {
+  if (is(flowNode, 'bpmn:SubProcess') && flowNode.get('triggeredByEvent')) {
     return false;
   }
 
@@ -68,28 +68,28 @@ CamundaModdleExtension.prototype.canHostInputOutput = function(parent) {
 };
 
 CamundaModdleExtension.prototype.canHostConnector = function(parent) {
-  var serviceTaskLike = getParent(parent, "camunda:ServiceTaskLike");
+  var serviceTaskLike = getParent(parent, 'camunda:ServiceTaskLike');
 
-  if (is(serviceTaskLike, "bpmn:MessageEventDefinition")) {
+  if (is(serviceTaskLike, 'bpmn:MessageEventDefinition')) {
     // only allow on throw and end events
-    return getParent(parent, "bpmn:IntermediateThrowEvent") || getParent(parent, "bpmn:EndEvent");
+    return getParent(parent, 'bpmn:IntermediateThrowEvent') || getParent(parent, 'bpmn:EndEvent');
   }
 
   return true;
 };
 
 CamundaModdleExtension.prototype.canHostIn = function(parent) {
-  var callActivity = getParent(parent, "bpmn:CallActivity");
+  var callActivity = getParent(parent, 'bpmn:CallActivity');
 
   if (callActivity) {
     return true;
   }
 
-  var signalEventDefinition = getParent(parent, "bpmn:SignalEventDefinition");
+  var signalEventDefinition = getParent(parent, 'bpmn:SignalEventDefinition');
 
   if (signalEventDefinition) {
     // only allow on throw and end events
-    return getParent(parent, "bpmn:IntermediateThrowEvent") || getParent(parent, "bpmn:EndEvent");
+    return getParent(parent, 'bpmn:IntermediateThrowEvent') || getParent(parent, 'bpmn:EndEvent');
   }
 
   return true;

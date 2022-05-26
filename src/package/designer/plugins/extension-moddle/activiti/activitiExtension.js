@@ -1,15 +1,15 @@
-"use strict";
+'use strict';
 
 import { some } from '@/utils/min-dash.js';
 
 var ALLOWED_TYPES = {
-  FailedJobRetryTimeCycle: ["bpmn:StartEvent", "bpmn:BoundaryEvent", "bpmn:IntermediateCatchEvent", "bpmn:Activity"],
-  Connector: ["bpmn:EndEvent", "bpmn:IntermediateThrowEvent"],
-  Field: ["bpmn:EndEvent", "bpmn:IntermediateThrowEvent"]
+  FailedJobRetryTimeCycle: ['bpmn:StartEvent', 'bpmn:BoundaryEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:Activity'],
+  Connector: ['bpmn:EndEvent', 'bpmn:IntermediateThrowEvent'],
+  Field: ['bpmn:EndEvent', 'bpmn:IntermediateThrowEvent']
 };
 
 function is(element, type) {
-  return element && typeof element.$instanceOf === "function" && element.$instanceOf(type);
+  return element && typeof element.$instanceOf === 'function' && element.$instanceOf(type);
 }
 
 function exists(element) {
@@ -32,18 +32,18 @@ function anyType(element, types) {
 }
 
 function isAllowed(propName, propDescriptor, newElement) {
-  var name = propDescriptor.name,
-    types = ALLOWED_TYPES[name.replace(/activiti:/, "")];
+  var name = propDescriptor.name;
+  var types = ALLOWED_TYPES[name.replace(/activiti:/, '')];
 
   return name === propName && anyType(newElement, types);
 }
 
 export default function ActivitiModdleExtension(eventBus) {
   eventBus.on(
-    "property.clone",
+    'property.clone',
     function(context) {
-      var newElement = context.newElement,
-        propDescriptor = context.propertyDescriptor;
+      var newElement = context.newElement;
+      var propDescriptor = context.propertyDescriptor;
 
       this.canCloneProperty(newElement, propDescriptor);
     },
@@ -51,23 +51,23 @@ export default function ActivitiModdleExtension(eventBus) {
   );
 }
 
-ActivitiModdleExtension.$inject = ["eventBus"];
+ActivitiModdleExtension.$inject = ['eventBus'];
 
 ActivitiModdleExtension.prototype.canCloneProperty = function(newElement, propDescriptor) {
-  if (isAllowed("activiti:FailedJobRetryTimeCycle", propDescriptor, newElement)) {
+  if (isAllowed('activiti:FailedJobRetryTimeCycle', propDescriptor, newElement)) {
     return (
-      includesType(newElement.eventDefinitions, "bpmn:TimerEventDefinition") ||
-      includesType(newElement.eventDefinitions, "bpmn:SignalEventDefinition") ||
-      is(newElement.loopCharacteristics, "bpmn:MultiInstanceLoopCharacteristics")
+      includesType(newElement.eventDefinitions, 'bpmn:TimerEventDefinition') ||
+      includesType(newElement.eventDefinitions, 'bpmn:SignalEventDefinition') ||
+      is(newElement.loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')
     );
   }
 
-  if (isAllowed("activiti:Connector", propDescriptor, newElement)) {
-    return includesType(newElement.eventDefinitions, "bpmn:MessageEventDefinition");
+  if (isAllowed('activiti:Connector', propDescriptor, newElement)) {
+    return includesType(newElement.eventDefinitions, 'bpmn:MessageEventDefinition');
   }
 
-  if (isAllowed("activiti:Field", propDescriptor, newElement)) {
-    return includesType(newElement.eventDefinitions, "bpmn:MessageEventDefinition");
+  if (isAllowed('activiti:Field', propDescriptor, newElement)) {
+    return includesType(newElement.eventDefinitions, 'bpmn:MessageEventDefinition');
   }
 };
 

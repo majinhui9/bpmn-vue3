@@ -1,32 +1,32 @@
-import AutoPlace from "diagram-js/lib/features/auto-place/AutoPlace";
+import AutoPlace from 'diagram-js/lib/features/auto-place/AutoPlace';
 
 export default function CustomAutoPlace(eventBus, modeling) {
   AutoPlace.call(this, eventBus, modeling, 3000);
 
-  eventBus.on("autoPlace", 3000, function(context) {
-    const shape = context.shape,
-      source = context.source;
+  eventBus.on('autoPlace', 3000, function(context) {
+    const shape = context.shape;
+    const source = context.source;
 
     return getNewCustomShapePosition(source, shape);
   });
 
   this.append = function(source, shape, hints) {
-    eventBus.fire("autoPlace.start", {
+    eventBus.fire('autoPlace.start', {
       source: source,
       shape: shape
     });
 
     // allow others to provide the position
-    var position = eventBus.fire("autoPlace", {
+    var position = eventBus.fire('autoPlace', {
       source: source,
       shape: shape
     });
 
-    console.log("hints", hints, "position", position);
+    console.log('hints', hints, 'position', position);
 
     var newShape = modeling.appendShape(source, shape, position, source.parent, hints);
 
-    eventBus.fire("autoPlace.end", {
+    eventBus.fire('autoPlace.end', {
       source: source,
       shape: newShape
     });
@@ -65,8 +65,8 @@ export function getNewCustomShapePosition(source, element, hints) {
 
   var distance = hints.defaultDistance || 50;
 
-  var sourceMid = getMid(source),
-    sourceTrbl = asTRBL(source);
+  var sourceMid = getMid(source);
+  var sourceTrbl = asTRBL(source);
 
   // simply put element right next to source
   return {

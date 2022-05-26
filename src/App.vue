@@ -82,29 +82,28 @@
 </template>
 
 <script>
-import translations from "@/translations";
+import translations from '@/translations';
 // 自定义渲染（隐藏了 label 标签）
-import CustomRenderer from "@/modules/custom-renderer";
+import CustomRenderer from '@/modules/custom-renderer';
 // 自定义元素选中时的弹出菜单（修改 默认任务 为 用户任务）
-import CustomContentPadProvider from "./package/designer/plugins/content-pad";
+import CustomContentPadProvider from './package/designer/plugins/content-pad';
 // 自定义左侧菜单（修改 默认任务 为 用户任务）
-import CustomPaletteProvider from "./package/designer/plugins/palette";
-import Log from "./package/Log";
+import CustomPaletteProvider from './package/designer/plugins/palette';
+import Log from './package/Log';
 // 任务resize
 // import resizeTask from "bpmn-js-task-resize/lib";
 // 小地图
-import minimapModule from "diagram-js-minimap";
-
+import minimapModule from 'diagram-js-minimap';
 
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css';
 
 export default {
-  name: "App",
+  name: 'App',
   data() {
     return {
-      xmlString: "",
+      xmlString: '',
       modeler: null,
       reloadIndex: 0,
       controlDrawerVisible: false,
@@ -112,14 +111,14 @@ export default {
       pageMode: false,
       translationsSelf: translations,
       controlForm: {
-        processId: "",
-        processName: "",
+        processId: '',
+        processName: '',
         simulation: true,
         labelEditing: false,
         labelVisible: false,
-        prefix: "flowable",
-        headerButtonSize: "small",
-        events: ["element.click", "element.contextmenu"],
+        prefix: 'flowable',
+        headerButtonSize: 'small',
+        events: ['element.click', 'element.contextmenu'],
         // additionalModel: []
         additionalModel: [CustomContentPadProvider, CustomPaletteProvider, minimapModule]
       },
@@ -134,15 +133,15 @@ export default {
     initModeler(modeler) {
       setTimeout(() => {
         this.modeler = modeler;
-        const canvas = modeler.get("canvas");
+        const canvas = modeler.get('canvas');
         const rootElement = canvas.getRootElement();
-        Log.prettyPrimary("Process Id:", rootElement.id);
-        Log.prettyPrimary("Process Name:", rootElement.businessObject.name);
+        Log.prettyPrimary('Process Id:', rootElement.id);
+        Log.prettyPrimary('Process Name:', rootElement.businessObject.name);
       }, 10);
     },
     reloadProcessDesigner(notDeep) {
       this.controlForm.additionalModel = [];
-      for (let key in this.addis) {
+      for (const key in this.addis) {
         if (this.addis[key]) {
           this.controlForm.additionalModel.push(this.addis[key]);
         }
@@ -152,7 +151,7 @@ export default {
       this.modeler = null; // 避免 panel 异常
     },
     changeLabelEditingStatus(status) {
-      this.addis.labelEditing = status ? { labelEditingProvider: ["value", ""] } : false;
+      this.addis.labelEditing = status ? { labelEditingProvider: ['value', ''] } : false;
       this.reloadProcessDesigner();
     },
     changeLabelVisibleStatus(status) {
@@ -164,22 +163,22 @@ export default {
       this.element = element;
     },
     elementContextmenu(element) {
-      console.log("elementContextmenu:", element);
+      console.log('elementContextmenu:', element);
     },
     changePageMode(mode) {
       const theme = mode
         ? {
-            // dark
-            stroke: "#ffffff",
-            fill: "#333333"
-          }
+          // dark
+          stroke: '#ffffff',
+          fill: '#333333'
+        }
         : {
-            // light
-            stroke: "#000000",
-            fill: "#ffffff"
-          };
-      const elements = this.modeler.get("elementRegistry").getAll();
-      this.modeler.get("modeling").setColor(elements, theme);
+          // light
+          stroke: '#000000',
+          fill: '#ffffff'
+        };
+      const elements = this.modeler.get('elementRegistry').getAll();
+      this.modeler.get('modeling').setColor(elements, theme);
     }
   }
 };

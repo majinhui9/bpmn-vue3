@@ -54,10 +54,10 @@
 </template>
 
 <script>
-import { assign } from "min-dash";
+import { assign } from 'min-dash';
 
 export default {
-  name: "MyProcessPalette",
+  name: 'MyProcessPalette',
   data() {
     return {};
   },
@@ -65,7 +65,7 @@ export default {
   methods: {
     createElement(event, type, options = {}) {
       const ElementFactory = window.bpmnInstances.elementFactory;
-      const create = window.bpmnInstances.modeler.get("create");
+      const create = window.bpmnInstances.modeler.get('create');
       const shape = ElementFactory.createShape(assign({ type: `bpmn:${type}` }, options));
       if (options) {
         shape.businessObject.di.isExpanded = options.isExpanded;
@@ -73,14 +73,14 @@ export default {
       create.start(event, shape);
     },
     startTool(event, type) {
-      if (type === "handTool") {
-        window.bpmnInstances.modeler.get("handTool").activateHand(event);
+      if (type === 'handTool') {
+        window.bpmnInstances.modeler.get('handTool').activateHand(event);
       }
-      if (type === "lassoTool") {
-        window.bpmnInstances.modeler.get("lassoTool").activateSelection(event);
+      if (type === 'lassoTool') {
+        window.bpmnInstances.modeler.get('lassoTool').activateSelection(event);
       }
-      if (type === "connectTool") {
-        window.bpmnInstances.modeler.get("globalConnect").toggle(event);
+      if (type === 'connectTool') {
+        window.bpmnInstances.modeler.get('globalConnect').toggle(event);
       }
     }
   }

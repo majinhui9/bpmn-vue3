@@ -11,8 +11,8 @@ Object.keys(icons).forEach(key => {
   app.component(key, icons[key])
 })
 
-import MyPD from "./package/index.js";
+import MyPD from './package/index.js';
 app.use(MyPD);
-import "./package/theme/index.scss";
+import './package/theme/index.scss';
 
 app.mount('#app')

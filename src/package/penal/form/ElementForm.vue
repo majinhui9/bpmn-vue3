@@ -1,6 +1,6 @@
 <template>
   <div class="panel-tab__content">
-    <el-form size="default" label-width="80px"  @submit.prevent>
+    <el-form size="small" label-width="80px"  @submit.prevent>
       <el-form-item label="表单标识">
         <el-input v-model="formKey" clearable @change="updateElementFormKey" />
       </el-form-item>
@@ -15,27 +15,27 @@
     <!--字段列表-->
     <div class="element-property list-property">
       <el-divider><el-icon><coin /></el-icon> 表单字段</el-divider>
-      <el-table :data="fieldList" size="default" max-height="240" border fit>
+      <el-table :data="fieldList" size="small" max-height="240" border fit>
         <el-table-column label="序号" type="index" width="50px" />
         <el-table-column label="字段名称" prop="label" min-width="80px" show-overflow-tooltip />
         <el-table-column label="字段类型" prop="type" min-width="80px" :formatter="row => fieldType[row.type] || row.type" show-overflow-tooltip />
         <el-table-column label="默认值" prop="defaultValue" min-width="80px" show-overflow-tooltip />
         <el-table-column label="操作" width="90px">
           <template v-slot="{ row, $index }">
-            <el-button size="default" type="text"  @click="openFieldForm(row, $index)">编辑</el-button>
+            <el-button link type=""  @click="openFieldForm(row, $index)">编辑</el-button>
             <el-divider direction="vertical" />
-            <el-button size="default" type="text"  style="color: #ff4d4f" @click="removeField(row, $index)">移除</el-button>
+            <el-button link type=""  style="color: #ff4d4f" @click="removeField(row, $index)">移除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <div class="element-drawer__button">
-      <el-button size="default" type="primary" :icon="Plus"  @click="openFieldForm(null, -1)">添加字段</el-button>
+      <el-button size="small" type="primary" :icon="Plus"  @click="openFieldForm(null, -1)">添加字段</el-button>
     </div>
 
     <!--字段配置侧边栏-->
     <el-drawer v-model="fieldModelVisible" title="字段配置" :size="`${width}px`" append-to-body destroy-on-close>
-      <el-form :model="formFieldForm" label-width="90px" size="default" @submit.prevent>
+      <el-form :model="formFieldForm" label-width="90px" size="small" @submit.prevent>
         <el-form-item label="字段ID">
           <el-input v-model="formFieldForm.id" clearable />
         </el-form-item>
@@ -63,17 +63,17 @@
         <el-divider key="enum-divider" />
         <p key="enum-title" class="listener-filed__title">
           <span><el-icon><menu /></el-icon>枚举值列表：</span>
-          <el-button size="default" type="primary" @click="openFieldOptionForm(null, -1, 'enum')">添加枚举值</el-button>
+          <el-button size="small" type="primary" @click="openFieldOptionForm(null, -1, 'enum')">添加枚举值</el-button>
         </p>
-        <el-table key="enum-table" :data="fieldEnumList" size="default" max-height="240" border fit>
+        <el-table key="enum-table" :data="fieldEnumList" size="small" max-height="240" border fit>
           <el-table-column label="序号" width="50px" type="index" />
           <el-table-column label="枚举值编号" prop="id" min-width="100px" show-overflow-tooltip />
           <el-table-column label="枚举值名称" prop="name" min-width="100px" show-overflow-tooltip />
           <el-table-column label="操作" width="90px">
             <template v-slot="{ row, $index }">
-              <el-button size="default" type="text" @click="openFieldOptionForm(row, $index, 'enum')">编辑</el-button>
+              <el-button link type="" @click="openFieldOptionForm(row, $index, 'enum')">编辑</el-button>
               <el-divider direction="vertical" />
-              <el-button size="default" type="text" style="color: #ff4d4f" @click="removeFieldOptionItem(row, $index, 'enum')">移除</el-button>
+              <el-button link type="" style="color: #ff4d4f" @click="removeFieldOptionItem(row, $index, 'enum')">移除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -83,17 +83,17 @@
       <el-divider key="validation-divider" />
       <p key="validation-title" class="listener-filed__title">
         <span><el-icon><menu /></el-icon>约束条件列表：</span>
-        <el-button size="default" type="primary" @click="openFieldOptionForm(null, -1, 'constraint')">添加约束</el-button>
+        <el-button size="small" type="primary" @click="openFieldOptionForm(null, -1, 'constraint')">添加约束</el-button>
       </p>
-      <el-table key="validation-table" :data="fieldConstraintsList" size="default" max-height="240" border fit>
+      <el-table key="validation-table" :data="fieldConstraintsList" size="small" max-height="240" border fit>
         <el-table-column label="序号" width="50px" type="index" />
         <el-table-column label="约束名称" prop="name" min-width="100px" show-overflow-tooltip />
         <el-table-column label="约束配置" prop="config" min-width="100px" show-overflow-tooltip />
         <el-table-column label="操作" width="90px">
           <template v-slot="{ row, $index }">
-            <el-button size="default" type="text" @click="openFieldOptionForm(row, $index, 'constraint')">编辑</el-button>
+            <el-button link type="" @click="openFieldOptionForm(row, $index, 'constraint')">编辑</el-button>
             <el-divider direction="vertical" />
-            <el-button size="default" type="text" style="color: #ff4d4f" @click="removeFieldOptionItem(row, $index, 'constraint')">移除</el-button>
+            <el-button link type="" style="color: #ff4d4f" @click="removeFieldOptionItem(row, $index, 'constraint')">移除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -102,30 +102,30 @@
       <el-divider key="property-divider" />
       <p key="property-title" class="listener-filed__title">
         <span><el-icon><menu /></el-icon>字段属性列表：</span>
-        <el-button size="default" type="primary" @click="openFieldOptionForm(null, -1, 'property')">添加属性</el-button>
+        <el-button size="small" type="primary" @click="openFieldOptionForm(null, -1, 'property')">添加属性</el-button>
       </p>
-      <el-table key="property-table" :data="fieldPropertiesList" size="default" max-height="240" border fit>
+      <el-table key="property-table" :data="fieldPropertiesList" size="small" max-height="240" border fit>
         <el-table-column label="序号" width="50px" type="index" />
         <el-table-column label="属性编号" prop="id" min-width="100px" show-overflow-tooltip />
         <el-table-column label="属性值" prop="value" min-width="100px" show-overflow-tooltip />
         <el-table-column label="操作" width="90px">
           <template v-slot="{ row, $index }">
-            <el-button size="default" type="text" @click="openFieldOptionForm(row, $index, 'property')">编辑</el-button>
+            <el-button link type="" @click="openFieldOptionForm(row, $index, 'property')">编辑</el-button>
             <el-divider direction="vertical" />
-            <el-button size="default" type="text" style="color: #ff4d4f" @click="removeFieldOptionItem(row, $index, 'property')">移除</el-button>
+            <el-button link type="" style="color: #ff4d4f" @click="removeFieldOptionItem(row, $index, 'property')">移除</el-button>
           </template>
         </el-table-column>
       </el-table>
 
       <!-- 底部按钮 -->
       <div class="element-drawer__button">
-        <el-button size="default">取 消</el-button>
-        <el-button size="default" type="primary" @click="saveField">保 存</el-button>
+        <el-button size="small">取 消</el-button>
+        <el-button size="small" type="primary" @click="saveField">保 存</el-button>
       </div>
     </el-drawer>
 
     <el-dialog v-model="fieldOptionModelVisible" :title="optionModelTitle" width="600px" append-to-body destroy-on-close>
-      <el-form :model="fieldOptionForm" size="default" label-width="96px" @submit.prevent>
+      <el-form :model="fieldOptionForm" size="small" label-width="96px" @submit.prevent>
         <el-form-item v-if="fieldOptionType !== 'constraint'" key="option-id" label="编号/ID">
           <el-input v-model="fieldOptionForm.id" clearable />
         </el-form-item>
@@ -140,8 +140,8 @@
         </el-form-item>
       </el-form>
       <template v-slot:footer>
-        <el-button size="default" @click="fieldOptionModelVisible = false">取 消</el-button>
-        <el-button size="default" type="primary" @click="saveFieldOption">确 定</el-button>
+        <el-button size="small" @click="fieldOptionModelVisible = false">取 消</el-button>
+        <el-button size="small" type="primary" @click="saveFieldOption">确 定</el-button>
       </template>
     </el-dialog>
   </div>

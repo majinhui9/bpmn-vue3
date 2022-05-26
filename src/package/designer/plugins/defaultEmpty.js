@@ -1,9 +1,9 @@
 export default (key, name, type) => {
-  if (!type) type = "camunda";
+  if (!type) type = 'camunda';
   const TYPE_TARGET = {
-    activiti: "http://activiti.org/bpmn",
-    camunda: "http://bpmn.io/schema/bpmn",
-    flowable: "http://flowable.org/bpmn"
+    activiti: 'http://activiti.org/bpmn',
+    camunda: 'http://bpmn.io/schema/bpmn',
+    flowable: 'http://flowable.org/bpmn'
   };
   return `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions 

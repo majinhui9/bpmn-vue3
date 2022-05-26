@@ -1,4 +1,4 @@
-import MyPropertiesPalette from "./ProcessPalette.vue";
+import MyPropertiesPalette from './ProcessPalette.vue';
 
 MyPropertiesPalette.install = function(Vue) {
   Vue.component(MyPropertiesPalette.name, MyPropertiesPalette);

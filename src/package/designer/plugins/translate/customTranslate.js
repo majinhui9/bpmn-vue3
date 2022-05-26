@@ -35,7 +35,7 @@ export default function customTranslate(translations) {
         str = translations[replacements[key]];
         // eslint-disable-next-line no-mixed-spaces-and-tabs
       }
-      return str || "{" + key + "}";
+      return str || '{' + key + '}';
     });
   };
 }

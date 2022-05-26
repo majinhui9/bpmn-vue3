@@ -5,11 +5,11 @@
         <el-select v-model="bindMessageId" @change="updateTaskMessage">
           <el-option v-for="id in Object.keys(messageMap)" :value="id" :label="messageMap[id]" :key="id" />
         </el-select>
-        <el-button size="default" type="primary" :icon="Plus" style="margin-left: 8px" @click="openMessageModel" />
+        <el-button size="small" type="primary" :icon="Plus" style="margin-left: 8px" @click="openMessageModel" />
       </div>
     </el-form-item>
     <el-dialog v-model="messageModelVisible" :close-on-click-modal="false" title="创建新消息" width="400px" append-to-body destroy-on-close>
-      <el-form :model="newMessageForm" size="default" label-width="90px" @submit.prevent>
+      <el-form :model="newMessageForm" size="small" label-width="90px" @submit.prevent>
         <el-form-item label="消息ID">
           <el-input v-model="newMessageForm.id" clearable />
         </el-form-item>
@@ -18,7 +18,7 @@
         </el-form-item>
       </el-form>
       <template v-slot:footer>
-        <el-button size="default" type="primary" @click="createNewMessage">确 认</el-button>
+        <el-button size="small" type="primary" @click="createNewMessage">确 认</el-button>
       </template>
     </el-dialog>
   </div>
